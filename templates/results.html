@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<p>
+Hey {{ session.get('name') }}!
+You are {{ compliment }}.
+</p>
+
+
+{% endblock %}

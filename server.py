@@ -5,7 +5,7 @@ app.secret_key = "blahhhhhhhh"
 
 @app.route('/')
 def show_homepage():
-    
+
     return render_template('homepage.html')
 
 ###############################
@@ -17,7 +17,7 @@ def show_homepage():
 
 @app.route('/form')
 def show_form():
-    
+
     return render_template('form.html')
 
 @app.route('/results')
@@ -25,21 +25,18 @@ def show_results():
 
     compliment = request.args.getlist("choosy")
     compliment = ", ".join(compliment)
-    
+
     return render_template('results.html', compliment = compliment)
 
-@app.route('/save-name')
+@app.route('/save-name', methods=['POST', 'GET'])
 def save_name():
 
-    name = request.args.get("name")
-
-    if 'name' in session:
-        name = session['name'] 
+    if request.method == 'POST':
+        name = request.form['name']
+        session["name"] = name
+        return redirect('/form')
     else:
-        name = session['name'] = {}
-
-    return redirect('http://0.0.0.0:5000/form')
-
+        return render_template("homepage.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
